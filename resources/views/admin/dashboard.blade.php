@@ -23,6 +23,7 @@
         <!-- Form Input Data -->
         <form action="{{ route('validation.store') }}" method="POST" class="bg-white shadow-md rounded-lg p-6 mb-6">
             @csrf
+
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label for="jobdesk" class="block text-sm font-medium text-gray-700">Jobdesk</label>
@@ -40,33 +41,28 @@
                 </div>
                 
                 <div>
-                    <label for="se" class="block text-sm font-medium text-gray-700">Se</label>
-                    <input type="number" name="se" id="se" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                </div>
-                <div>
-                    <label for="s" class="block text-sm font-medium text-gray-700">S</label>
-                    <input type="number" name="s" id="s" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                </div>
-                <div>
-                    <label for="r" class="block text-sm font-medium text-gray-700">R</label>
-                    <input type="number" name="r" id="r" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                </div>
-                <div>
-                    <label for="k" class="block text-sm font-medium text-gray-700">K</label>
-                    <input type="number" name="k" id="k" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                </div>
-                <div>
-                    <label for="j" class="block text-sm font-medium text-gray-700">J</label>
-                    <input type="number" name="j" id="j" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                </div>
+                    <label for="hari" class="block text-sm font-medium text-gray-700">Hari</label>
+                    <select id="hari" name="hari" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <option value="" disabled selected>Pilih Hari </option>
+                        <option value="Senin">Senin</option>
+                        <option value="Selasa">Selasa</option>
+                        <option value="Rabu">Rabu</option>
+                        <option value="Kamis">Kamis</option>
+                        <option value="Jum'at">Jum'at</option>
+                    </select>
+                
                 <div>
                     <label for="target" class="block text-sm font-medium text-gray-700">Target</label>
-                    <input type="number" name="target" id="target" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                    <select id="target" name="target" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <option value=disabled selected> 100 </option>
                 </div>
+               
                 <div>
-                    <label for="Avg" class="block text-sm font-medium text-gray-700">Avg</label>
-                    <input type="number" name="Avg" id="Avg" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                    <label for="Average" class="block text-sm font-medium text-gray-700">Average</label>
+                    <select id="Average" name="Average" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <option value=disabled selected> 0 </option>
                 </div>
+
                 <div>
                     <label for="Keterangan" class="block text-sm font-medium text-gray-700">keterangan</label>
                     <input type="number" name="Keterangan" id="Keterangan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
