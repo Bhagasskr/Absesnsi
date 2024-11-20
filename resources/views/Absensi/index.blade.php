@@ -37,11 +37,6 @@
                         <a class="flex items-center p-2 hover:bg-gray-700 rounded" href="#">
                             <i class="fas fa-database mr-2"></i> Report Data
                         </a>
-                        <ul class="ml-6 mt-2">
-                            <li>
-                                
-                            </li>
-                        </ul>
                     </li>
                 </ul>
             </nav>
@@ -63,65 +58,50 @@
                     </div>
                 </div>
             </div>
-        
 
-                    <form action="{{ route('absensi.store') }}" method="POST" class="mt-4">
-                        @csrf
-                        <div class="flex">
-                            <div class="w-1/2">
-                                <div class="mb-4">
-                                    <label for="nama" class="block text-gray-700">Nama</label>
-                                    <input id="nama" name="nama" type="text" class="w-full p-2 border rounded bg-gray-200" required>
-                                </div>
-                                <div class="mb-4">
-                                    <label for="nik" class="block text-gray-700">NIK</label>
-                                    <input id="nik" name="nik" type="text" class="w-full p-2 border rounded bg-gray-200" required>
-                                </div>
-                                <div class="mb-4">
-                                    <label for="jamabsen" class="block text-gray-700">Jam Absen</label>
-                                    <input id="jamabsen" name="jamabsen" type="text" class="w-full p-2 border rounded bg-gray-200" readonly>
-                                </div>
-                                <div class="mb-4">
-                                    <label class="block text-gray-700">Latitude</label>
-                                    <input id="latitude" name="latitude" class="w-full p-2 border rounded bg-gray-200" readonly type="text" name="latitude" id="latitude">
-                                </div>
-                                
-                                <div class="mb-4">
-                                    <label class="block text-gray-700">Longitude</label>
-                                    <input id="longitude" name="longitude" class="w-full p-2 border rounded bg-gray-200" readonly type="text" name="longitude" id="longitude">
-                                </div>
-                                <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded">Simpan</button>
-                            </div>
+            <form action="{{ route('absensi.store') }}" method="POST" enctype="multipart/form-data" class="mt-4">
+                @csrf
+                <div class="flex">
+                    <div class="w-1/2">
+                        <div class="mb-4">
+                            <label for="nama" class="block text-gray-700">Nama</label>
+                            <input id="nama" name="nama" type="text" class="w-full p-2 border rounded bg-gray-200" required>
                         </div>
-                    </form>
-    
+                        <div class="mb-4">
+                            <label for="nik" class="block text-gray-700">NIK</label>
+                            <input id="nik" name="nik" type="text" class="w-full p-2 border rounded bg-gray-200" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="jamabsen" class="block text-gray-700">Jam Absen</label>
+                            <input id="jamabsen" name="jamabsen" type="text" class="w-full p-2 border rounded bg-gray-200" readonly>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700">Latitude</label>
+                            <input id="latitude" name="latitude" class="w-full p-2 border rounded bg-gray-200" readonly type="text">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700">Longitude</label>
+                            <input id="longitude" name="longitude" class="w-full p-2 border rounded bg-gray-200" readonly type="text">
+                        </div>
+                        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded">Simpan</button>
                     </div>
                     <div class="w-1/2 flex flex-col items-center">
                         <!-- Video stream dari kamera -->
-                        <video id="camera-preview" autoplay></video>
-                        
-                        <!-- Tombol untuk mengambil foto -->
-                        <button id="capture-button" class="bg-red-600 text-white px-6 py-2 rounded mt-4">Ambil Foto</button>
-    
+                        <video id="camera-preview" autoplay playsinline></video>
                         <!-- Gambar hasil tangkapan -->
                         <canvas id="capture" width="640" height="480" style="display: none;"></canvas>
-    
-                        <!-- Form untuk mengirim data foto -->
-                        <form id="absensi-form" action="{{ route('absensi.store') }}" method="POST" enctype="multipart/form-data" class="mt-4">
-                            
-                            <input type="hidden" name="photo" id="photo">
-                    </form>
+                        <input type="hidden" name="photo" id="photo">
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
-
     <script>
         const video = document.getElementById('camera-preview');
         const captureButton = document.getElementById('capture-button');
         const captureCanvas = document.getElementById('capture');
-        const photoDataInput = document.getElementById('photo-data');
-        
+        const photoDataInput = document.getElementById('photo');
+
         // Mengambil lokasi pengguna
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
@@ -134,47 +114,39 @@
             alert("Geolocation tidak didukung oleh browser Anda.");
         }
 
-
-        // Jam
+        // Menampilkan waktu
         document.addEventListener('DOMContentLoaded', function () {
-        const jamAbsen = document.getElementById('jamabsen');
+            const jamAbsen = document.getElementById('jamabsen');
 
-        function updateTime() {
-            const sekarang = new Date();
-            const jam = sekarang.getHours().toString().padStart(2, '0');
-            const menit = sekarang.getMinutes().toString().padStart(2, '0');
-            const detik = sekarang.getSeconds().toString().padStart(2, '0');
-            jamAbsen.value = `${jam}:${menit}:${detik}`;
-        }
+            function updateTime() {
+                const sekarang = new Date();
+                const jam = sekarang.getHours().toString().padStart(2, '0');
+                const menit = sekarang.getMinutes().toString().padStart(2, '0');
+                const detik = sekarang.getSeconds().toString().padStart(2, '0');
+                jamAbsen.value = `${jam}:${menit}:${detik}`;
+            }
 
-        // Update setiap detik
-        setInterval(updateTime, 1000);
+            setInterval(updateTime, 1000);
+            updateTime();
+        });
 
-        // Inisialisasi pertama
-        updateTime();
-    });
-
-
-
-        // Memanggil fungsi setCurrentTime saat halaman dimuat
-        window.onload = setCurrentTime;
-
-        // Akses Kamera
+        // Akses kamera
         navigator.mediaDevices.getUserMedia({ video: true })
             .then(stream => {
                 video.srcObject = stream;
             })
             .catch(error => {
                 console.error("Error accessing camera: ", error);
+                alert("Kamera tidak dapat diakses. Pastikan izin telah diberikan.");
             });
 
-        // Fungsi untuk mengambil foto
-            captureButton.addEventListener('click', () => {
+        // Mengambil foto
+        captureButton.addEventListener('click', () => {
             captureCanvas.width = video.videoWidth;
             captureCanvas.height = video.videoHeight;
-            captureCanvas.getContext('2d').drawImage(video, 0, 0);
+            const context = captureCanvas.getContext('2d');
+            context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
 
-            // Mengubah gambar ke format base64 dan memasukkannya ke input tersembunyi
             const photoDataUrl = captureCanvas.toDataURL('image/png');
             photoDataInput.value = photoDataUrl;
 

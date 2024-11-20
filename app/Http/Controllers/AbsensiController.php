@@ -33,7 +33,7 @@ class AbsensiController extends Controller
         'jamabsen' => 'required|date_format:H:i:s',
         'latitude' => 'required|numeric|between:-90,90', 
         'longitude' => 'required|numeric|between:-180,180', 
-        'photo_path' => 'nullable|string|max:255', 
+        'photo_path' => 'required|string|max:255', 
     ]);
 
     // Simpan ke database

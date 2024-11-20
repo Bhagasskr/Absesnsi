@@ -28,10 +28,17 @@
                     <label for="jobdesk" class="block text-sm font-medium text-gray-700">Jobdesk</label>
                     <input type="text" name="jobdesk" id="jobdesk" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
                 </div>
+                
                 <div>
                     <label for="nama" class="block text-sm font-medium text-gray-700">Nama</label>
-                    <input type="text" name="nama" id="nama" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                    <select id="nama" name="nama" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <option value="" disabled selected>Pilih Nama</option>
+                        <option value="Bagas">Bagas</option>
+                        <option value="Andi">Andi</option>
+                        <option value="Siti">Siti</option>
+                    </select>
                 </div>
+                
                 <div>
                     <label for="se" class="block text-sm font-medium text-gray-700">Se</label>
                     <input type="number" name="se" id="se" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">

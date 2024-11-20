@@ -13,9 +13,9 @@ class CreateAbsensisTable extends Migration
             $table->string('nama');
             $table->string('nik');
             $table->time('jamabsen');
-            // $table->decimal('latitude', 10, 8);
-            // $table->decimal('longitude', 11, 8);
-            // $table->string('photo_path')->nullable();
+            $table->decimal('latitude', 10, 8);
+            $table->decimal('longitude', 11, 8);
+            $table->string('photo_path')->nullable();
             $table->timestamps();
         });
     }

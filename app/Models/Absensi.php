@@ -13,10 +13,10 @@ class Absensi extends Model
     protected $fillable = [
         'nama', 
         'nik', 
-        'jamabsen' 
-        // 'latitude', 
-        // 'longitude', 
-        // 'photo_path',
+        'jamabsen', 
+        'latitude', 
+        'longitude', 
+        'photo_path',
     ];
 }
 
