@@ -34,7 +34,7 @@ Route::middleware([
     // Route Admin
     
     Route::get('/admin/dashboard', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
-
+    
     // Route User
     Route::get('/user/dashboard', [UserController::class, 'showDashboard'])->name('user.dashboard');
 

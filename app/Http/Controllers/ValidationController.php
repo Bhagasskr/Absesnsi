@@ -17,24 +17,45 @@ class ValidationController extends Controller
     }
 
     // Menyimpan data baru
-    public function store(Request $request)
-    {
-        $request->validate([
-            'jobdesk' => 'required',
-            'nama' => 'required',
-            'se' => 'nullable|numeric',
-            's' => 'nullable|numeric',
-            'r' => 'nullable|numeric',
-            'k' => 'nullable|numeric',
-            'j' => 'nullable|numeric',
-            'target' => 'required|numeric',
-            'Avg' => 'required|numeric',
-            'Keterangan' => 'required',
-        ]);
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+    //         'jobdesk' => 'required',
+    //         'nama' => 'required',
+    //         'se' => 'nullable|numeric',
+    //         's' => 'nullable|numeric',
+    //         'r' => 'nullable|numeric',
+    //         'k' => 'nullable|numeric',
+    //         'j' => 'nullable|numeric',
+    //         'target' => 'required|numeric',
+    //         'Avg' => 'required|numeric',
+    //         // 'Keterangan' => 'nullable',
+    //     ]);
 
-        Validation::create($request->all());
-        return redirect()->route('validation.index')->with('success', 'Data berhasil ditambahkan');
-    }
+    //     // Validation::create($request->all());
+    //     Validation::create($validated);
+    //     return redirect()->route('validation.index')->with('success', 'Data berhasil ditambahkan');
+    // }
+    public function store(Request $request)
+{
+    $validated = $request->validate([
+        'jobdesk' => 'required',
+        'nama' => 'required',
+        'hari' => 'required',
+        'se' => 'nullable|numeric',
+        's' => 'nullable|numeric',
+        'r' => 'nullable|numeric',
+        'k' => 'nullable|numeric',
+        'j' => 'nullable|numeric',
+        'target' => 'required|numeric',
+        'Avg' => 'required|numeric',
+        'Keterangan' => 'nullable',
+    ]);
+
+    Validation::create($validated);
+    return redirect()->route('validation.index')->with('success', 'Data berhasil ditambahkan');
+}
+
 
     // Menampilkan form edit
     public function edit($id)
@@ -56,7 +77,7 @@ class ValidationController extends Controller
             'j' => 'nullable|numeric',
             'target' => 'required|numeric',
             'Avg' => 'required|numeric',
-            'Keterangan' => 'required',
+            'Keterangan' => 'nullable',
         ]);
 
         $validation = Validation::findOrFail($id);

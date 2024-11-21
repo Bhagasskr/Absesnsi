@@ -90,7 +90,7 @@
                         <video id="camera-preview" autoplay playsinline></video>
                         <!-- Gambar hasil tangkapan -->
                         <canvas id="capture" width="640" height="480" style="display: none;"></canvas>
-                        <input type="hidden" name="photo" id="photo">
+                        <input type="hidden" name="photo_path" id="photo_path">
                     </div>
                 </div>
             </form>
