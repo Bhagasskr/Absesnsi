@@ -59,8 +59,8 @@
                     </select>
                 </div>
         
-                {{-- <div>
-                    <label for="se" class="block text-sm font-medium text-gray-700">SE</label>
+                <div>
+                    <label for="se" class="block text-sm font-medium text-gray-700">Se</label>
                     <input type="number" id="se" name="se" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Jumlah SE">
                 </div>
         
@@ -82,7 +82,7 @@
                 <div>
                     <label for="j" class="block text-sm font-medium text-gray-700">J</label>
                     <input type="number" id="j" name="j" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Jumlah J">
-                </div> --}}
+                </div>
                 
                 <div>
                     <label for="target" class="block text-sm font-medium text-gray-700">Target</label>

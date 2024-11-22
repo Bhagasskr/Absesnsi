@@ -6,6 +6,7 @@ use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ValidationController;
+use App\Http\Controllers\JobdeskRecordController;
 
 
 Route::get('/', function () {
@@ -40,6 +41,13 @@ Route::middleware([
 
     Route::get('/validation', [ValidationController::class, 'index'])->name('validation.index');
     Route::post('/validation', [ValidationController::class, 'store'])->name('validation.store');
+
+    Route::get('/jobdesk-records', [JobdeskRecordController::class, 'index'])->name('jobdesk_records.index');
+    Route::post('/jobdesk-records', [JobdeskRecordController::class, 'store'])->name('jobdesk_records.store');
+    Route::get('/jobdesk_records', [JobdeskRecordController::class, 'index']);
+    Route::get('/jobdesk', function () {
+        return view('jobdesk_records'); // Nama file view tanpa ekstensi .blade.php
+    });
 
     
 

@@ -23,53 +23,49 @@ class AbsensiController extends Controller
         return view('absensi.create');
     }
 
-    // Menyimpan data baru
     public function store(Request $request)
 {
-    // Validasi input
-    $validated = $request->validate([
+    $request->validate([
         'nama' => 'required|string|max:255',
         'nik' => 'required|string|max:255',
         'jamabsen' => 'required|date_format:H:i:s',
-        'latitude' => 'required|numeric|between:-90,90', 
-        'longitude' => 'required|numeric|between:-180,180', 
-        // 'photo_path' => 'required|string',
- 
+        'latitude' => 'required|numeric|between:-90,90',
+        'longitude' => 'required|numeric|between:-180,180',
+        'photo_path' => 'required|string',
     ]);
 
-    // // Cek apakah file gambar ada di request
-    // if ($request->hasFile('photo_path')) {
-    //     // Simpan file ke folder 'public/absensi' di storage
-    //     $filePath = $request->file('photo_path')->store('public/absensi');
+    // Mengambil data foto
+    $photoData = $request->input('photo_path');
+    $photoPath = null;
 
-    //     // Simpan path file (tanpa 'public/') ke dalam $validated
-    //     $validated['photo_path'] = str_replace('public/', '', $filePath);
-    // }
-    // // Proses Base64 menjadi file gambar
-    // $photoData = $validated['photo_path'];
-    // $photoPath = null;
+    if ($photoData) {
+        // Decode base64 menjadi gambar
+        $photo = base64_decode(str_replace('data:image/png;base64,', '', $photoData));
 
-    // if ($photoData) {
-    //     // Decode Base64
-    //     $photo = base64_decode(str_replace('data:image/png;base64,', '', $photoData));
+        // Buat nama file unik
+        $fileName = 'absensi_' . time() . '.png';
 
-    //     // Buat nama file unik
-    //     $fileName = 'absensi_' . time() . '.png';
+        // Simpan gambar di folder 'public/absensi'
+        $filePath = 'public/absensi/' . $fileName;
+        Storage::put($filePath, $photo);
 
-    //     // Simpan gambar ke folder storage/app/public/absensi
-    //     $filePath = 'public/absensi/' . $fileName;
-    //     Storage::put($filePath, $photo);
+        // Simpan path gambar (tanpa 'public/') ke dalam database
+        $photoPath = str_replace('public/', '', $filePath);
+    }
 
-    //     // Simpan path gambar (tanpa 'public/') ke dalam database
-    //     $photoPath = str_replace('public/', '', $filePath);
-    // }
+    // Menyimpan data absensi
+    Absensi::create([
+        'nama' => $request->nama,
+        'nik' => $request->nik,
+        'jamabsen' => $request->jamabsen,
+        'latitude' => $request->latitude,
+        'longitude' => $request->longitude,
+        'photo_path' => $photoPath,
+    ]);
 
-    // Simpan ke database
-    Absensi::create($validated);
-
-    // Redirect ke halaman indeks absensi dengan pesan sukses
-    return redirect()->back()->with('success', 'Absen berhasil disimpan!');
+    return redirect()->route('absensi.index')->with('success', 'Data absensi berhasil disimpan!');
 }
+
     // Menampilkan detail absensi
     public function show(Absensi $absensi)
     {
