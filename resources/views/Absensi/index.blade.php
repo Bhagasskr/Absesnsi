@@ -16,6 +16,20 @@
             display: none;
             margin-top: 10px;
         }
+        #alert {
+            display: none;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        #alert.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        #alert.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -34,8 +48,8 @@
                         </a>
                     </li>
                     <li class="mb-4">
-                        <a class="flex items-center p-2 hover:bg-gray-700 rounded" href="#">
-                            <i class="fas fa-database mr-2"></i> Report Data
+                        <a class="flex items-center p-2 hover:bg-gray-700 rounded" href="jobdesk_records">
+                            <i class="fas fa-database mr-2"></i> REPORT DATA
                         </a>
                     </li>
                 </ul>
@@ -58,6 +72,8 @@
                     </div>
                 </div>
             </div>
+
+            <div id="alert" class="alert"></div> <!-- Alert Box -->
 
             <form action="{{ route('absensi.store') }}" method="POST" enctype="multipart/form-data" class="mt-4" id="absensi-form">
                 @csrf
@@ -94,77 +110,77 @@
                     </div>
                 </div>
             </form>
-            
         </div>
     </div>
+
     <script>
-        const video = document.getElementById('camera-preview');
-        const captureButton = document.getElementById('capture-button');
-        const captureCanvas = document.getElementById('capture');
-        const photoDataInput = document.getElementById('photo');
-
         document.addEventListener('DOMContentLoaded', function () {
-    const video = document.getElementById('camera-preview');
-    const captureButton = document.getElementById('capture-button');
-    const captureCanvas = document.getElementById('capture');
-    const photoDataInput = document.getElementById('photo_path');
-    const absensiForm = document.getElementById('absensi-form'); // Formulir absensi
+            const video = document.getElementById('camera-preview');
+            const captureCanvas = document.getElementById('capture');
+            const photoDataInput = document.getElementById('photo_path');
+            const absensiForm = document.getElementById('absensi-form');
+            const alertBox = document.getElementById('alert');
+            const jamAbsen = document.getElementById('jamabsen');
 
-    // Mengambil lokasi pengguna
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(position => {
-            document.getElementById('latitude').value = position.coords.latitude;
-            document.getElementById('longitude').value = position.coords.longitude;
-        }, error => {
-            alert("Gagal mendapatkan lokasi, periksa pengaturan izin lokasi Anda.");
+            // Fungsi untuk menampilkan alert
+            function showAlert(type, message) {
+                alertBox.className = type === 'success' ? 'success' : 'error';
+                alertBox.textContent = message;
+                alertBox.style.display = 'block';
+                setTimeout(() => {
+                    alertBox.style.display = 'none';
+                }, 3000);
+            }
+
+            // Fungsi untuk memperbarui waktu
+            function updateTime() {
+                const sekarang = new Date();
+                const jam = sekarang.getHours().toString().padStart(2, '0');
+                const menit = sekarang.getMinutes().toString().padStart(2, '0');
+                const detik = sekarang.getSeconds().toString().padStart(2, '0');
+                jamAbsen.value = `${jam}:${menit}:${detik}`;
+            }
+
+            // Jalankan fungsi pertama kali untuk menginisialisasi waktu
+            updateTime();
+
+            // Perbarui jam setiap detik
+            setInterval(updateTime, 1000);
+
+            // Akses lokasi pengguna
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    document.getElementById('latitude').value = position.coords.latitude;
+                    document.getElementById('longitude').value = position.coords.longitude;
+                }, () => showAlert('error', 'Gagal mendapatkan lokasi. Periksa izin lokasi.'));
+            }
+
+            // Akses kamera
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    video.srcObject = stream;
+                })
+                .catch(() => showAlert('error', 'Kamera tidak dapat diakses.'));
+
+            absensiForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                captureCanvas.width = video.videoWidth;
+                captureCanvas.height = video.videoHeight;
+                const context = captureCanvas.getContext('2d');
+                context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+
+                photoDataInput.value = captureCanvas.toDataURL('image/png');
+
+                if (photoDataInput.value) {
+                    showAlert('success', 'Absensi berhasil disimpan!');
+                } else {
+                    showAlert('error', 'Absensi gagal, coba lagi.');
+                }
+
+                absensiForm.submit();
+            });
         });
-    } else {
-        alert("Geolocation tidak didukung oleh browser Anda.");
-    }
-
-    // Menampilkan waktu
-    function updateTime() {
-        const jamAbsen = document.getElementById('jamabsen');
-        const sekarang = new Date();
-        const jam = sekarang.getHours().toString().padStart(2, '0');
-        const menit = sekarang.getMinutes().toString().padStart(2, '0');
-        const detik = sekarang.getSeconds().toString().padStart(2, '0');
-        jamAbsen.value = `${jam}:${menit}:${detik}`;
-    }
-
-    setInterval(updateTime, 1000);
-    updateTime();
-
-    // Akses kamera
-    navigator.mediaDevices.getUserMedia({ video: true })
-        .then(stream => {
-            video.srcObject = stream;
-        })
-        .catch(error => {
-            console.error("Error accessing camera: ", error);
-            alert("Kamera tidak dapat diakses. Pastikan izin telah diberikan.");
-        });
-
-    // Mengambil foto ketika tombol submit diklik
-    absensiForm.addEventListener('submit', function (event) {
-        // Cegah submit form dulu
-        event.preventDefault();
-
-        // Ambil foto
-        captureCanvas.width = video.videoWidth;
-        captureCanvas.height = video.videoHeight;
-        const context = captureCanvas.getContext('2d');
-        context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-
-        // Konversi gambar ke Base64
-        const photoDataUrl = captureCanvas.toDataURL('image/png');
-        photoDataInput.value = photoDataUrl;
-
-        // Kirim form setelah foto diambil
-        absensiForm.submit();
-    });
-});
-
     </script>
 </body>
 </html>

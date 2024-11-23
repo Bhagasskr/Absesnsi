@@ -8,14 +8,21 @@
     <div class="container mt-4">
         <h1>Daftar Karyawan</h1>
 
+        <!-- Tombol-tombol -->
+        <div class="d-flex justify-content-start align-items-center gap-3 mb-3">
+            <!-- Button untuk mengarahkan ke form absensi -->
+            <a href="{{ route('absensi.index') }}" class="btn btn-primary">Menuju Form Absensi</a>
+            
+            <!-- Tombol untuk menambah karyawan -->
+            <a href="{{ route('karyawan.create') }}" class="btn btn-success">Tambah Karyawan</a>
+        </div>
+
         <!-- Pesan sukses -->
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
-        <!-- Tombol untuk menambah karyawan -->
-        <a href="{{ route('karyawan.create') }}" class="btn btn-success mb-3">Tambah Karyawan</a>
-
+        <!-- Tabel daftar karyawan -->
         <table class="table table-bordered">
             <thead class="thead-light">
                 <tr>
@@ -23,6 +30,7 @@
                     <th>NIK</th>
                     <th>Posisi</th>
                     <th>Unit</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>

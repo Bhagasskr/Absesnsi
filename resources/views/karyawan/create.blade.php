@@ -37,6 +37,7 @@
                 <input type="text" name="unit" id="unit" class="form-control" list="unit-list" required>
                 <datalist id="unit-list">
                     <option value="Data Manajemen">
+                </datalist>
             </div>
             
             <button type="submit" class="btn btn-success">Simpan</button>

@@ -39,14 +39,14 @@ Route::middleware([
     // Route User
     Route::get('/user/dashboard', [UserController::class, 'showDashboard'])->name('user.dashboard');
 
-    Route::get('/validation', [ValidationController::class, 'index'])->name('validation.index');
-    Route::post('/validation', [ValidationController::class, 'store'])->name('validation.store');
+    // Route::get('/validation', [ValidationController::class, 'index'])->name('validation.index');
+    // Route::post('/validation', [ValidationController::class, 'store'])->name('validation.store');
 
     Route::get('/jobdesk-records', [JobdeskRecordController::class, 'index'])->name('jobdesk_records.index');
     Route::post('/jobdesk-records', [JobdeskRecordController::class, 'store'])->name('jobdesk_records.store');
     Route::get('/jobdesk_records', [JobdeskRecordController::class, 'index']);
     Route::get('/jobdesk', function () {
-        return view('jobdesk_records'); // Nama file view tanpa ekstensi .blade.php
+        return view('jobdesk_records'); 
     });
 
     

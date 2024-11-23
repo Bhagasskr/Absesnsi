@@ -23,24 +23,22 @@
                             <i class="fas fa-tachometer-alt mr-2"></i> DASHBOARD
                         </a>
                     </li>
-                    <li class="mb-4">
-                        <a class="flex items-center p-2 hover:bg-gray-700 rounded" href="#">
-                            <i class="fas fa-database mr-2"></i> Report Data
-                        </a>
-                    </li>
+                    
                 </ul>
             </nav>
             <div class="absolute bottom-4 left-4">
-                <button class="bg-red-600 p-2 rounded-full">
+                <button class="bg-red-600 p-2 rounded-full" href="absensi">
                     <i class="fas fa-arrow-left text-white"></i>
                 </button>
             </div>
         </div>
-        
+
         <!-- Main Content -->
         <div class="flex-1 p-6">
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold">Jobdesk Records</h1>
+                <!-- Button Logout -->
+                <a href="{{ route('login') }}" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Logout</a>
             </div>
 
             @if(session('success'))
