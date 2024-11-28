@@ -52,11 +52,16 @@
                             <i class="fas fa-database mr-2"></i> REPORT DATA
                         </a>
                     </li>
+                    <li class="mb-4">
+                        <a class="flex items-center p-2 hover:bg-gray-700 rounded" href="{{ route('admin.report') }}">
+                            <i class="fas fa-database mr-2"></i> MASTER DATA
+                        </a>
+                    </li>
                 </ul>
             </nav>
             <div class="absolute bottom-4 left-4">
                 <button class="bg-red-600 p-2 rounded-full">
-                    <i class="fas fa-arrow-left text-white"></i>
+                    <a href="{{ route('dashboard') }}" class="fas fa-arrow-left text-white"></a>
                 </button>
             </div>
         </div>
@@ -66,7 +71,7 @@
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold">ABSENSI KEHADIRAN PEGAWAI</h1>
                 <div class="flex items-center">
-                    <span class="mr-2">Users</span>
+                    <span class="mr-2">{{ Auth::user()->name }}</span>
                     <div class="bg-gray-300 p-2 rounded-full">
                         <i class="fas fa-user"></i>
                     </div>

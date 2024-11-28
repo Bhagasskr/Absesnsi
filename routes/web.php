@@ -1,16 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\KaryawanController;
-use App\Http\Controllers\AbsensiController;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ReportAdmin;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AbsensiController;
+use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\ValidationController;
 use App\Http\Controllers\JobdeskRecordController;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::middleware([
@@ -48,6 +49,12 @@ Route::middleware([
     Route::get('/jobdesk', function () {
         return view('jobdesk_records'); 
     });
+
+
+    Route::middleware(['auth:sanctum','adminPage'])->group(function () {
+        Route::get('/admin/report', [ReportAdmin::class, 'index'])->name('admin.report');
+    });
+
 
     
 

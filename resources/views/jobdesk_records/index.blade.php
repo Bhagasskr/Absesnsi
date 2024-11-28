@@ -23,6 +23,11 @@
                             <i class="fas fa-tachometer-alt mr-2"></i> DASHBOARD
                         </a>
                     </li>
+                    <li class="mb-4">
+                        <a class="flex items-center p-2 hover:bg-gray-700 rounded" href="{{ route('jobdesk_records.index') }}">
+                            <i class="fas fa-tachometer-alt mr-2"></i> REPORT
+                        </a>
+                    </li>
                     
                 </ul>
             </nav>
@@ -38,7 +43,12 @@
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold">Jobdesk Records</h1>
                 <!-- Button Logout -->
-                <a href="{{ route('login') }}" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Logout</a>
+                <form action="{{ route('logout') }}" method="POST" class="inline">
+                    @csrf
+                    <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
+                        Logout
+                    </button>
+                </form>
             </div>
 
             @if(session('success'))
@@ -109,7 +119,7 @@
                 </div>
             </form>
 
-            <h2 class="text-xl font-semibold mt-8">Daftar Jobdesk Records</h2>
+            {{-- <h2 class="text-xl font-semibold mt-8">Daftar Jobdesk Records</h2>
             <table class="min-w-full table-auto mt-4 border-collapse">
                 <thead>
                     <tr class="bg-gray-300">
@@ -135,7 +145,7 @@
                         </tr>
                     @endforeach
                 </tbody>
-            </table>
+            </table> --}}
         </div>
     </div>
 
